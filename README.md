@@ -31,7 +31,7 @@ npm run preview    # serve dist/
 | Wind | [ ] | |
 | Sound / HUD | M / H | |
 
-URL flags: `?mood=night`, `?nointro`, `?mute`, `?q=0..3` (pins a quality tier; 0 is best), `?dpr=1.5`, `?noboat`, `?debug` (puts internals on `window`, plus `step()` and `bench()`).
+URL flags: `?mood=night`, `?nointro`, `?mute`, `?q=0..4` (pins a quality tier; 0 is best), `?dpr=1.5`, `?noboat`, `?debug` (puts internals on `window`, plus `step()` and `bench()`).
 
 ## Layout
 
@@ -59,7 +59,7 @@ ocean FFT → boat probes and physics → camera → Kelvin wake → dynamic wav
 
 - Moods, colours and exposure: `MOODS` in `src/config.js`. A mood with a `night` block turns on the grade, stars, bloom and lamps.
 - How hard the hull pushes the water and how much of the waves it throws back: `DYN.PUSH` and `DYN.SEA`.
-- Quality tiers: `QUALITY`. Touch devices start at tier 2, and every device steps down if the frame rate sags.
+- Quality tiers: `QUALITY`. Laptops start at tier 0 and never drop below 1× resolution; phones start at tier 3. A step that does not speed frames up (a browser battery saver capping at 30 fps) is undone, and adapting stops.
 
 ## Deploy (GitHub + Vercel)
 

@@ -3,7 +3,7 @@
  *  unless a name says otherwise. URL flags:
  *    ?debug        exposes internals on window and step()/bench()
  *    ?mood=night   day | golden | sunset | night
- *    ?q=0..3       pins a quality tier (0 = best)   ?dpr=1.5 pins the pixel ratio
+ *    ?q=0..4       pins a quality tier (0 = best)   ?dpr=1.5 pins the pixel ratio
  *    ?nointro      skips the opening shot           ?mute starts silent
  *    ?noboat       the sea alone
  * ================================================================== */
@@ -46,13 +46,17 @@ export const WAKE = { RES:1024, TEX:1, REACH:160, AMP:.15 };
 /* the dynamic-wave grid around the boat: two wave speeds as a crude dispersion */
 export const DYN = { RES:512, DX:.25, C:[2.5, 4.6], PUSH:.42, SEA:.3 };   /* PUSH: water displaced by the hull; SEA: how much of the waves' relief the hull throws back */
 
-/* ---------------- render quality tiers (auto steps down while the frame rate sags) ---------------- */
+/* ---------------- render quality tiers (auto steps down while the frame rate sags) ----------------
+   Cheap-to-lose things go first (cloud detail, shadow resolution), sharpness last: laptops never drop
+   below 1x so the boat stays crisp; the last tier is for phones only */
 export const QUALITY = [
   { dpr:1.5,  clouds:'medium', refl:true,  shadow:2048 },
-  { dpr:1.15, clouds:'medium', refl:true,  shadow:2048 },
-  { dpr:.9,   clouds:'low',    refl:true,  shadow:1024 },
-  { dpr:.72,  clouds:'low',    refl:false, shadow:1024 },
+  { dpr:1.5,  clouds:'low',    refl:true,  shadow:2048 },
+  { dpr:1.25, clouds:'low',    refl:true,  shadow:1024 },
+  { dpr:1,    clouds:'low',    refl:true,  shadow:1024 },
+  { dpr:.8,   clouds:'low',    refl:false, shadow:1024 },
 ];
+export const QUALITY_TOUCH = { start:3, max:4 }, QUALITY_DESKTOP = { start:0, max:3 };
 
 /* ---------------- assets (served from public/assets, copied from the npm packages) ---------------- */
 export const ASSETS = {
