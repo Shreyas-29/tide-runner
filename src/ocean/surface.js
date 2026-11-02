@@ -31,7 +31,7 @@ export function createSurface(app, { ocean, sky, wake, dyn }){
   const U = sky.U;
   const uniforms = {
     uSunDir:U.sunDir, uSunCol:U.sunCol, uZen:U.zen, uHor:U.hor, uScatter:U.scatter, uSSS:U.sss, uTime:U.time, uCover:U.cover,
-    tSS:U.tSS, uVPRot:U.vpRot, uSSOK:U.ssOK, uDbg:{ value:0 }, uCenter:{ value:new THREE.Vector2() }, uHs:{ value:1 },
+    tSS:U.tSS, uVPRot:U.vpRot, uSSOK:U.ssOK, uSpecK:U.specK, uDbg:{ value:0 }, uCenter:{ value:new THREE.Vector2() }, uHs:{ value:1 },
     uBoatInv:{ value:new THREE.Matrix4() }, uReflMat:{ value:new THREE.Matrix4() }, uReflY:{ value:0 }, uBoatOn:{ value:0 }, tRefl:{ value:null },
     uLampPos:{ value:new THREE.Vector3() }, uLampCol:{ value:new THREE.Color(0, 0, 0) },
     ...wake.uniforms, ...dyn.uniforms,

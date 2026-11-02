@@ -90,7 +90,7 @@ function onReveal(){
 }
 
 setMood(mood);
-boat.faceSun(sky.U.sunDir.value);
+boat.faceSun(sky.U.sunDir.value, MOODS[mood].face);
 resize();
 quality.apply();
 

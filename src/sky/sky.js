@@ -7,6 +7,7 @@ import { DitheringEffect } from '@takram/three-geospatial-effects';
 import { ASSETS, params } from '../config.js';
 import { SaveSkyPass, BoatPass, NightGradeEffect, REFLECT_LAYER, BOAT_LAYER } from './passes.js';
 import { createStars } from './stars.js';
+import { createMoon } from './moon.js';
 
 /* ================================================================== *
  *  Sky: takram's physically based atmosphere (Bruneton) and volumetric
@@ -32,7 +33,7 @@ export function createSky(app, { onAsset = ()=>{} } = {}){
 
   /* ---------------- effects ---------------- */
   const aerial = new AerialPerspectiveEffect(camera);
-  aerial.sky = true; aerial.sun = true; aerial.moon = false;   /* at night the "sun" disc is the moon (see applyMood) */
+  aerial.sky = true; aerial.sun = true; aerial.moon = false;   /* at night the sun disc is off and our own moon is drawn (moon.js) */
   aerial.worldToECEFMatrix.copy(worldToECEF);
   const clouds = new CloudsEffect(camera);
   clouds.worldToECEFMatrix.copy(worldToECEF);
@@ -101,10 +102,11 @@ export function createSky(app, { onAsset = ()=>{} } = {}){
     sunDir:{ value:new THREE.Vector3(0, 1, 0) }, sunCol:{ value:new THREE.Color(0, 0, 0) }, zen:{ value:new THREE.Color(.02, .04, .08) }, hor:{ value:new THREE.Color(.05, .06, .07) },
     scatter:{ value:new THREE.Color() }, sss:{ value:new THREE.Color() }, time:{ value:0 }, cover:{ value:.3 },
     tSS:{ value:saveSky.rt.texture }, vpRot:{ value:new THREE.Matrix4() }, ssOK:{ value:0 },
+    specK:{ value:1 },   /* the glint's strength: the moon's path on the water is far gentler than the sun's */
   };
 
-  const stars = createStars();
-  scene.add(stars.object);
+  const stars = createStars(), moon = createMoon();
+  scene.add(stars.object, moon.object);
 
   let lightDirty = true, current = null;
   const localDir = (el, az)=>{ const e = el*Math.PI/180, a = az*Math.PI/180; return new THREE.Vector3(Math.cos(e)*Math.cos(a), Math.sin(e), Math.cos(e)*Math.sin(a)); };
@@ -123,7 +125,9 @@ export function createSky(app, { onAsset = ()=>{} } = {}){
     U.scatter.value.setRGB(...m.water); U.sss.value.setRGB(...m.sss);
     const n = m.night;
     nightPass.enabled = bloomPass.enabled = !!n; night.amount = n ? n.grade : 0; bloom.intensity = n ? n.bloom : 0;
-    stars.object.visible = !!n; if(n) stars.gain = n.stars;
+    stars.object.visible = moon.object.visible = !!n; aerial.sun = !n;
+    if(n){ stars.gain = n.stars; moon.gain = n.moon; moon.direction = dir; }
+    U.specK.value = n ? n.glint : 1;
     lightDirty = true;
   }
 

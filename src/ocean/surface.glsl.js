@@ -17,7 +17,7 @@ export const surfaceVertex = ({ N, Ls, chunks })=>chunks + /* glsl */`
 
 export const surfaceFragment = ({ N, Ls, chunks })=>chunks + /* glsl */`
   uniform sampler2D tD0, tD1, tD2, tN0, tN1, tN2, tF0, tF1, tF2, tSS;
-  uniform vec3 uSunDir, uSunCol, uZen, uHor, uScatter, uSSS, uLampPos, uLampCol; uniform float uHs, uTime, uCover, uSSOK, uDbg; uniform mat4 uVPRot;
+  uniform vec3 uSunDir, uSunCol, uZen, uHor, uScatter, uSSS, uLampPos, uLampCol; uniform float uHs, uTime, uCover, uSSOK, uSpecK, uDbg; uniform mat4 uVPRot;
   uniform mat4 uBoatInv, uReflMat; uniform float uBoatOn, uReflY; uniform sampler2D tRefl;
   varying vec3 vW; varying vec2 vG;
   float fres(float c){ float x = 1. - clamp(c, 0., 1.), x2 = x*x; return .02 + .98*x2*x2*x; }
@@ -131,7 +131,7 @@ export const surfaceFragment = ({ N, Ls, chunks })=>chunks + /* glsl */`
     /* glitter: unresolved facets are tiny mirrors flashing in turn; only where the cells are smaller than a pixel */
     vec2 gcell = floor(vG/max(fp*1.4, .12));
     float tw = hash12(gcell + floor(uTime*6.)*vec2(17.13, 31.7));
-    spec *= mix(1., pow(tw, 5.)*6., .3*smoothstep(.07, .14, fp*1.4));
+    spec *= mix(1., pow(tw, 5.)*6., .3*smoothstep(.07, .14, fp*1.4))*uSpecK;
 
     vec3 skyHemi = mix(uHor, uZen, .5)*(.6 + .4*N.y);
     vec3 body = uScatter*(skyHemi*(.7 + .9*N.y) + sunC*(max(L.y, 0.)*.16 + max(nl, 0.)*.12)*(1. - .5*uCover));

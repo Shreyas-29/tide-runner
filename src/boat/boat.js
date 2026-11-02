@@ -62,6 +62,6 @@ export function createBoat(app, { ocean, sky, surface }){
     model, physics, reflection, state:S, enabled, applyMood, update,
     renderReflection(){ if(enabled) reflection.render(S.wl); },
     /* the opening: sun ahead and a little to one side */
-    faceSun(dir){ S.h = Math.atan2(dir.x, dir.z) + 1.1; },
+    faceSun(dir, offset = 1.1){ S.h = Math.atan2(dir.x, dir.z) + offset; },
   };
 }

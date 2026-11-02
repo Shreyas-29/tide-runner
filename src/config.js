@@ -33,8 +33,8 @@ export const MOODS = {
   day:    { label:'Day',         el:38,  az:150, cover:.28, exp:5,   tone:'AGX',         boatSun:.38, env:.55, wind:7, chop:1,    water:[.006, .045, .065], sss:[.04, .32, .36] },
   golden: { label:'Golden hour', el:11,  az:240, cover:.3,  exp:6,   tone:'AGX',         boatSun:.2,  env:.75, wind:8, chop:1.05, water:[.005, .036, .052], sss:[.06, .32, .32] },
   sunset: { label:'Sunset',      el:1.4, az:250, cover:.2,  exp:7.8, tone:'ACES_FILMIC', boatSun:.24, env:1.1, wind:7, chop:1,    water:[.012, .05, .075],  sss:[.08, .34, .34] },
-  night:  { label:'Night',       el:24,  az:205, cover:.24, exp:.75, tone:'AGX',         boatSun:.16, env:.4,  wind:6, chop:.95,  water:[.004, .03, .05],   sss:[.03, .2, .26],
-            night:{ grade:1, stars:8, bloom:.8, lamps:9, cabin:7, deck:22 } },
+  night:  { label:'Night',       el:13,  az:205, face:.55, cover:.24, exp:.75, tone:'AGX',         boatSun:.16, env:.4,  wind:6, chop:.95,  water:[.004, .03, .05],   sss:[.03, .2, .26],
+            night:{ grade:1, stars:8, bloom:.45, lamps:9, cabin:7, deck:22, moon:4.2, glint:.22 } },
 };
 export const MOOD_KEYS = ['day', 'golden', 'sunset', 'night'];
 
