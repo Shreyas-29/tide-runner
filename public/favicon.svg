@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- TIDERUNNER as a flat side-profile icon, in the boat's own colours and parts -->
+  <g transform="translate(0 4)" stroke="#121417" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+    <!-- deck rails aft and forward -->
+    <path d="M6.5 32.5v-4.8h7.5v4.4M10.2 27.7v4.6" fill="none" stroke-width="1.1"/>
+    <path d="M47.5 31.4v-4.2h7.6v3.7M51.3 27.2v4" fill="none" stroke-width="1.1"/>
+    <!-- life raft canister on the aft deck -->
+    <rect x="7.8" y="29.2" width="5.4" height="3.6" rx="1.6" fill="#f2f4f5" stroke-width="1.1"/>
+    <!-- bow bollard -->
+    <path d="M44.6 32.4v-2h2.2v1.9" fill="#3a4148" stroke-width="1"/>
+    <!-- light mast tower with the radar on its arm and the beacon on top -->
+    <path d="M22.4 18.6 23.6 8.6h3.1l1 10" fill="#1b1e22"/>
+    <path d="M26.6 12.6h10.2" stroke-width="3.2"/>
+    <path d="M26.6 12.6h10.2" stroke="#f2f4f5" stroke-width="1.5"/>
+    <path d="M25.1 8.6V5.4" stroke-width="1.1"/>
+    <circle cx="25.1" cy="4.6" r="1.6" fill="#4aa6ff" stroke-width="1"/>
+    <!-- wheelhouse: orange, black roof trim, raked windscreen -->
+    <path d="M14.5 34V21c0-1.4 1.1-2.5 2.5-2.5h24.6c1 0 1.9.7 2.2 1.6L48.6 34z" fill="#f2541e"/>
+    <path d="M15.2 18.6h28.3" stroke-width="2.4"/>
+    <!-- the band of side windows and the windscreen -->
+    <rect x="18" y="22" width="4.6" height="4.4" rx=".9" fill="#14212a" stroke-width="1"/>
+    <rect x="24.4" y="22" width="4.6" height="4.4" rx=".9" fill="#14212a" stroke-width="1"/>
+    <rect x="30.8" y="22" width="4.6" height="4.4" rx=".9" fill="#14212a" stroke-width="1"/>
+    <path d="M37.3 22h5.3l1.5 4.4h-6.8z" fill="#14212a" stroke-width="1"/>
+    <!-- louvred vent aft -->
+    <path d="M17.4 29.4h5.2M17.4 31h5.2" stroke="#b83b14" stroke-width=".9"/>
+    <!-- hull: flat transom, sheer rising to a sharp raked bow -->
+    <path d="M4.5 34 58.6 31.6 53.4 45.4c-.6 1.6-2.2 2.7-3.9 2.7H10c-2.3 0-4.1-1.6-4.4-3.9z" fill="#2a2f35"/>
+    <!-- the hull's diagonal plating -->
+    <path d="M16 36.4l-1.6 4.4M25.5 36l-1.6 4.4M35 35.6l-1.6 4.4M44.5 35.2l-1.6 4.4" stroke="#41484f" stroke-width=".9"/>
+    <!-- red boot stripe on the waterline -->
+    <path d="M7.3 42.6 52.5 41.4" stroke="#e23b22" stroke-width="2.4"/>
+    <!-- green side light at the bow -->
+    <circle cx="53.6" cy="34.6" r="1.1" fill="#3ddc84" stroke-width=".8"/>
+    <!-- black rubber fender along the sheer -->
+    <path d="M4.1 34.1 59 31.6" stroke-width="3.2"/>
+    <path d="M5.2 33.2 57.8 30.8" stroke="#4a5158" stroke-width=".7"/>
+  </g>
+</svg>

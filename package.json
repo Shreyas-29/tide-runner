@@ -1,0 +1,27 @@
+{
+  "name": "tiderunner",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Open Ocean: drive a pilot boat across a real-time FFT ocean in the browser. Every wave, cloud and rivet is written in code.",
+  "type": "module",
+  "scripts": {
+    "assets": "node scripts/sync-assets.mjs",
+    "predev": "npm run assets",
+    "dev": "vite",
+    "prebuild": "npm run assets",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@takram/three-atmosphere": "0.19.1",
+    "@takram/three-clouds": "0.7.6",
+    "@takram/three-geospatial": "0.9.1",
+    "@takram/three-geospatial-effects": "0.6.4",
+    "postprocessing": "6.39.1",
+    "three": "0.184.0"
+  },
+  "devDependencies": {
+    "vite": "7.3.7"
+  },
+  "engines": { "node": ">=20" }
+}

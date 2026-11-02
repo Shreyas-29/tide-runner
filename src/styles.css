@@ -1,0 +1,59 @@
+html,body{margin:0;height:100%;background:#000;overflow:hidden;color:#e9eef2;
+  font:500 11px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.05em}
+canvas{display:block;width:100vw;height:100vh;cursor:grab;touch-action:none}
+canvas:active{cursor:grabbing}
+/* the HUD: a wide display face for the name, a light grotesk for the big number, a mono for the readouts */
+#hud{position:fixed;inset:0;pointer-events:none;color:#eef3f6;font-family:'Space Grotesk',system-ui,sans-serif;
+  text-shadow:0 1px 14px rgba(0,0,0,.35);transition:opacity 1.8s ease}
+#hud.pre{opacity:0} #hud.off{display:none}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.brand{position:absolute;left:30px;top:26px}
+.brand b{display:block;font:700 15px/1 'Syncopate',sans-serif;letter-spacing:.42em}
+.brand span{display:block;margin-top:9px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.26em;opacity:.58}
+.moods{position:absolute;right:28px;top:20px;display:flex;gap:6px;pointer-events:auto}
+.moods button{all:unset;cursor:pointer;font:600 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;
+  padding:8px 13px;border-radius:999px;background:rgba(10,16,22,.26);border:1px solid rgba(255,255,255,.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .3s,color .3s}
+.moods button i{font-style:normal;opacity:.5;margin-right:8px}
+.moods button:hover{background:rgba(255,255,255,.14)}
+.moods button.on{background:rgba(255,255,255,.93);color:#0b1218;border-color:transparent;text-shadow:none}
+.sea{position:absolute;right:30px;top:60px;text-align:right;font:500 10px/1.9 'JetBrains Mono',monospace;letter-spacing:.18em;opacity:.62}
+.speed{position:absolute;left:30px;bottom:28px}
+.speed b{font:300 68px/.9 'Space Grotesk',sans-serif;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.speed i{font:600 11px 'JetBrains Mono',monospace;letter-spacing:.32em;margin-left:10px;opacity:.7;font-style:normal}
+.bar{width:156px;height:2px;margin:14px 0 9px;border-radius:2px;background:rgba(255,255,255,.18);overflow:hidden}
+.bar div{height:100%;width:0;background:linear-gradient(90deg,#78dcff,#fff);transition:width .25s}
+.speed span{font:500 10px 'JetBrains Mono',monospace;letter-spacing:.24em;opacity:.6}
+.keys{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);display:flex;gap:20px;align-items:center;white-space:nowrap;
+  font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;opacity:.78}
+kbd{display:inline-block;min-width:9px;padding:4px 5px;margin-right:3px;text-align:center;border:1px solid rgba(255,255,255,.3);border-radius:5px;
+  background:rgba(10,16,22,.24);font:600 9px/1 'JetBrains Mono',monospace;letter-spacing:0}
+/* phones: a thumb stick bottom-left (up throttle, sideways steer), speed moves to the right */
+#stick{position:absolute;left:26px;bottom:30px;display:none;pointer-events:auto;touch-action:none;text-align:center}
+body.touch #stick{display:block} body.touch .keys{display:none}
+body.touch .speed{left:auto;right:26px;text-align:right} body.touch .speed .bar{margin-left:auto}
+#stick .ring{position:relative;width:132px;height:132px;border-radius:50%;border:1px solid rgba(255,255,255,.3);
+  background:radial-gradient(circle,rgba(10,16,22,.1),rgba(10,16,22,.34));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#stick .ring::before,#stick .ring::after{content:'';position:absolute;left:50%;top:12px;bottom:12px;width:1px;background:rgba(255,255,255,.14)}
+#stick .ring::after{left:12px;right:12px;top:50%;bottom:auto;width:auto;height:1px}
+#stick .knob{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 4px 18px rgba(0,0,0,.35);transition:transform .12s ease-out}
+#stick.held .knob{transition:none}
+#stick span{display:block;margin-top:10px;font:500 9px 'JetBrains Mono',monospace;letter-spacing:.24em;text-transform:uppercase;opacity:.6}
+@media (max-width:980px){ .keys{display:none} .moods button{padding:7px 9px} .moods button i{display:none} }
+/* the entrance: a curtain while the sky is computed and the clouds settle, then a title over the opening shot */
+#curtain{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;color:#eef3f6;
+  background:radial-gradient(120% 90% at 50% 42%,#0d1c27 0%,#04080b 72%);transition:opacity 2s ease}
+#curtain b{font:700 28px/1 'Syncopate',sans-serif;letter-spacing:.6em;margin-right:-.6em}
+#curtain span{font:500 10px 'JetBrains Mono',monospace;letter-spacing:.32em;text-transform:uppercase;opacity:.55}
+#curtain .pb{width:190px;height:1px;background:rgba(255,255,255,.14)} #curtain .pb div{height:100%;width:0;background:#fff;transition:width .7s ease}
+#curtain.gone{opacity:0;pointer-events:none}
+#title{position:fixed;left:0;right:0;top:36%;z-index:4;text-align:center;color:#fff;pointer-events:none;opacity:0;
+  text-shadow:0 2px 30px rgba(0,0,0,.35);transition:opacity 1.8s ease}
+#title b{display:block;font:700 46px/1 'Syncopate',sans-serif;letter-spacing:.5em;margin-right:-.5em;transition:letter-spacing 7s ease-out}
+#title span{display:block;margin-top:18px;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.34em;text-transform:uppercase;opacity:.75}
+#title.show{opacity:1} #title.show b{letter-spacing:.62em;margin-right:-.62em}
+@media (max-width:700px){ #title b{font-size:24px} #curtain b{font-size:18px}
+  .brand{left:22px;top:22px} .brand b{font-size:13px} .moods{left:22px;right:auto;top:62px} .sea{display:none} .speed b{font-size:54px} }
+#fatal{position:fixed;inset:0;z-index:9;display:grid;place-items:center;padding:24px;text-align:center;background:#04080b;color:#eef3f6;
+  font:500 12px/1.8 'JetBrains Mono',monospace;letter-spacing:.12em}

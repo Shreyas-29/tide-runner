@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Open Ocean · Tiderunner</title>
+<meta name="description" content="Drive a pilot boat across an open ocean in your browser. Every wave, cloud and rivet is written in code.">
+<meta name="theme-color" content="#04080b">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<!-- share card: absolute URLs, change the domain here if you deploy elsewhere -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tiderunner.heyshreyas.com/">
+<meta property="og:title" content="Open Ocean · Tiderunner">
+<meta property="og:description" content="Drive a pilot boat across an open ocean in your browser. Every wave, cloud and rivet is written in code.">
+<meta property="og:image" content="https://tiderunner.heyshreyas.com/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Open Ocean · Tiderunner">
+<meta name="twitter:description" content="Drive a pilot boat across an open ocean in your browser. Every wave, cloud and rivet is written in code.">
+<meta name="twitter:image" content="https://tiderunner.heyshreyas.com/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="hud" class="pre">
+  <div class="brand"><b>OPEN OCEAN</b><span>TIDERUNNER · 16 M PILOT BOAT</span></div>
+  <div class="moods" id="moods"></div>
+  <div class="sea" id="sea"></div>
+  <div class="speed" id="speed"><b id="kn">0</b><i>KN</i><div class="bar"><div id="thr"></div></div><span id="hdg">HDG 000°</span></div>
+  <div class="keys" id="keys"></div>
+  <div id="stick"><div class="ring"><div class="knob"></div></div><span>throttle · steer</span></div>
+</div>
+<div id="curtain"><b>OPEN OCEAN</b><div class="pb"><div id="pb"></div></div><span id="cs">setting the sky</span></div>
+<div id="title"><b>OPEN OCEAN</b><span>every wave, cloud and rivet written in code</span></div>
+<noscript><p style="position:fixed;inset:0;display:grid;place-items:center;color:#fff">Open Ocean needs JavaScript and WebGL 2.</p></noscript>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+# copied from the npm packages by scripts/sync-assets.mjs
+public/assets/atmosphere/
+public/assets/clouds/
+.DS_Store
+.vercel
