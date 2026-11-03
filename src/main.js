@@ -65,7 +65,7 @@ const quality = createQuality({ renderer, sky, boat, resize });
 addEventListener('resize', resize);
 
 /* ---------------- moods and shortcuts ---------------- */
-let mood = FILM ? 'golden' : MOODS[params.get('mood')] ? params.get('mood') : 'day';
+let mood = FILM ? 'day' : MOODS[params.get('mood')] ? params.get('mood') : 'day';
 function setMood(k){
   const m = MOODS[k]; if(!m) return;
   mood = k;
@@ -83,11 +83,12 @@ function onKey(code){
 /* any key, click or touch: sound may start now, and the player is taking over from the opening shot */
 let titleTimers = [];
 function onGesture(){
-  if(FILM){ if(sound.state.ctx) sound.start(); return; }   /* the film starts its own sound; a click only unlocks it */
+  if(FILM){ director.gesture(); return; }   /* the film rolls on the first click or key */
   sound.start();
   if(chase.intro.on && chase.intro.go){ chase.hurry(); titleTimers.forEach(clearTimeout); entrance.title(false); }
 }
 function onReveal(){
+  if(FILM && !director.rolling) return director.arm(onReveal);   /* sound needs a gesture, so the film waits for a click */
   chase.startIntro();
   director?.start();
   if(chase.intro.on) titleTimers = [setTimeout(()=>entrance.title(true), 1100), setTimeout(()=>entrance.title(false), 5600)];

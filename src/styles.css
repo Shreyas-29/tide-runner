@@ -57,6 +57,6 @@ body.touch .speed{left:auto;right:26px;text-align:right} body.touch .speed .bar{
   .brand{left:22px;top:22px} .brand b{font-size:13px} .moods{left:22px;right:auto;top:62px} .sea{display:none} .speed b{font-size:54px} }
 #fatal{position:fixed;inset:0;z-index:9;display:grid;place-items:center;padding:24px;text-align:center;background:#04080b;color:#eef3f6;
   font:500 12px/1.8 'JetBrains Mono',monospace;letter-spacing:.12em}
-/* ?film: no HUD, no cursor, and a black layer the director dips to between mood cuts */
+/* ?film: no HUD, no cursor, and a black layer the director fades to at the end */
 body.film #hud{display:none} body.film canvas{cursor:none}
 #fade{position:fixed;inset:0;z-index:4;background:#000;opacity:0;pointer-events:none}
