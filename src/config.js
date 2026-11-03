@@ -6,9 +6,11 @@
  *    ?q=0..4       pins a quality tier (0 = best)   ?dpr=1.5 pins the pixel ratio
  *    ?nointro      skips the opening shot           ?mute starts silent
  *    ?noboat       the sea alone
+ *    ?film         no HUD, a scripted promo shot (src/film/director.js)
  * ================================================================== */
 export const params = new URLSearchParams(location.search);
 export const DEBUG = params.has('debug');
+export const FILM = params.has('film');
 export const TOUCH = matchMedia('(pointer: coarse)').matches;
 
 export const TAU = Math.PI*2, G = 9.81;

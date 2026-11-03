@@ -1,6 +1,6 @@
 import './styles.css';
 import * as THREE from 'three';
-import { params, DEBUG, MOODS, MOOD_KEYS } from './config.js';
+import { params, DEBUG, FILM, MOODS, MOOD_KEYS } from './config.js';
 import { createPassRunner } from './core/gpu.js';
 import { createQuality } from './core/quality.js';
 import { createOcean } from './ocean/ocean.js';
@@ -14,6 +14,7 @@ import { createInput } from './ui/input.js';
 import { createHud } from './ui/hud.js';
 import { createEntrance } from './ui/entrance.js';
 import { createSound } from './audio/sound.js';
+import { createDirector } from './film/director.js';
 
 /* ================================================================== *
  *  Open Ocean · Tiderunner. Wires the pieces together and runs the
@@ -52,6 +53,7 @@ const boat = createBoat(app, { ocean, sky, surface });
 const chase = createChaseCamera(app, boat);
 const sound = createSound({ boat, camera, ocean });
 const input = createInput({ canvas, camera:chase, onKey, onGesture });
+const director = FILM ? createDirector({ chase, sound, setMood }) : null;
 
 function resize(){
   sky.composer.setSize(innerWidth, innerHeight);
@@ -63,13 +65,14 @@ const quality = createQuality({ renderer, sky, boat, resize });
 addEventListener('resize', resize);
 
 /* ---------------- moods and shortcuts ---------------- */
-let mood = MOODS[params.get('mood')] ? params.get('mood') : 'day';
+let mood = FILM ? 'golden' : MOODS[params.get('mood')] ? params.get('mood') : 'day';
 function setMood(k){
   const m = MOODS[k]; if(!m) return;
   mood = k;
   sky.applyMood(m); ocean.setWeather(m); boat.applyMood(m);
 }
 function onKey(code){
+  if(FILM) return;
   const i = ['Digit1', 'Digit2', 'Digit3', 'Digit4'].indexOf(code);
   if(i >= 0) setMood(MOOD_KEYS[i]);
   if(code === 'BracketRight') ocean.nudgeWind(1);
@@ -80,16 +83,19 @@ function onKey(code){
 /* any key, click or touch: sound may start now, and the player is taking over from the opening shot */
 let titleTimers = [];
 function onGesture(){
+  if(FILM){ if(sound.state.ctx) sound.start(); return; }   /* the film starts its own sound; a click only unlocks it */
   sound.start();
   if(chase.intro.on && chase.intro.go){ chase.hurry(); titleTimers.forEach(clearTimeout); entrance.title(false); }
 }
 function onReveal(){
   chase.startIntro();
+  director?.start();
   if(chase.intro.on) titleTimers = [setTimeout(()=>entrance.title(true), 1100), setTimeout(()=>entrance.title(false), 5600)];
   else hud.show();
 }
 
 setMood(mood);
+if(FILM) ocean.nudgeWind(3);   /* a livelier sea to boost through */
 boat.faceSun(sky.U.sunDir.value, MOODS[mood].face);
 resize();
 quality.apply();
@@ -107,7 +113,7 @@ function frame(now, manual){
   if(!manual && entrance.revealed && quality.watch(frameMs, raw)) frameMs = 16.7;
 
   ocean.simulate(T, dt);
-  boat.update(dt, input.read());
+  boat.update(dt, FILM ? director.update(dt) : input.read());
   entrance.tick();
   chase.update(dt);
   if(entrance.revealed && chase.introProgress > .72) hud.show();
@@ -132,7 +138,7 @@ requestAnimationFrame(frame);
 
 /* ---------------- ?debug: internals on window, and a way to step and time frames ---------------- */
 if(DEBUG) Object.assign(window, {
-  THREE, app, renderer, scene, camera, ocean, sky, wake, dyn, surface, boat, chase, sound, quality, setMood,
+  THREE, app, renderer, scene, camera, ocean, sky, wake, dyn, surface, boat, chase, sound, quality, setMood, director,
   BOAT:boat.state, CH:chase.state, surfU:surface.uniforms,
   step:(n = 1, h = 1/60)=>{ window.FREEZE = false; for(let i=0;i<n;i++){ last = performance.now() - h*1000; frame(performance.now(), true); } window.FREEZE = true; },
   bench:(n = 60)=>{ const px = new Uint8Array(4), g = renderer.getContext(); frame(performance.now(), true); g.readPixels(0, 0, 1, 1, g.RGBA, g.UNSIGNED_BYTE, px);
